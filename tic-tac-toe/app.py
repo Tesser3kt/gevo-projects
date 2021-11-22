@@ -10,7 +10,6 @@ PLAYER_COLOR = {
     1: (0, 0, 255)
 }
 TEXT_POSITION = -(BOUND + 100)
-
 DRAWING_SPEED = 10
 
 
@@ -105,6 +104,7 @@ class Game:
         self.player = 1
         self.drawer = drawer
         self.screen = screen
+        self.board = []
 
     def start_game(self):
         # bind click to handle_click

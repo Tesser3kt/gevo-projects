@@ -1,0 +1,106 @@
+{
+	"coins": {
+		"energizer": "coins/energizer",
+		"normal": "coins/normal"
+	},
+	"fruit": {
+		"apple": "fruit/apple",
+		"apricot": "fruit/apricot",
+		"cherry": "fruit/cherry",
+		"flame": "fruit/flame",
+		"melon": "fruit/melon",
+		"pear": "fruit/pear",
+		"strawberry": "fruit/strawberry"
+	},
+	"ghosts": {
+		"black_ghost": {
+			"up": "ghosts/black_ghost/up",
+			"right": "ghosts/black_ghost/right",
+			"bottom": "ghosts/black_ghost/bottom",
+			"left": "ghosts/black_ghost/left"
+		},
+		"blue_ghost": {
+			"up": "ghosts/blue_ghost/up",
+			"right": "ghosts/blue_ghost/right",
+			"bottom": "ghosts/blue_ghost/bottom",
+			"left": "ghosts/black_ghost/left"
+		},
+		"pink_ghost": {
+			"up": "ghosts/pink_ghost/up",
+			"right": "ghosts/pink_ghost/right",
+			"bottom": "ghosts/pink_ghost/bottom",
+			"left": "ghosts/pink_ghost/left"
+		},
+		"red_ghost": {
+			"up": "ghosts/red_ghost/up",
+			"right": "ghosts/red_ghost/right",
+			"bottom": "ghosts/red_ghost/bottom",
+			"left": "ghosts/red_ghost/left"
+		},
+		"turquoise_ghost": {
+			"up": "ghosts/turquoise_ghost/up",
+			"right": "ghosts/turquoise_ghost/right",
+			"bottom": "ghosts/turquoise_ghost/bottom",
+			"left": "ghosts/turquoise_ghost/left"
+		},
+		"white_ghost": {
+			"up": "ghosts/white_ghost/up",
+			"right": "ghosts/white_ghost/right",
+			"bottom": "ghosts/white_ghost/bottom",
+			"left": "ghosts/white_ghost/left"
+		},
+		"yellow_ghost": {
+			"up": "ghosts/yellow_ghost/up",
+			"right": "ghosts/yellow_ghost/right",
+			"bottom": "ghosts/yellow_ghost/bottom",
+			"left": "ghosts/yellow_ghost/left"
+		}
+	},
+	"other": {
+		"key": "other/key"
+	},
+	"pac": {
+		"up": "pac/up",
+		"right": "pac/right",
+		"left": "pac/left",
+		"down": "pac/down",
+		"die": "pac/die"
+	},
+	"walls": {
+		"inner": {
+			"top": "walls/inner/top",
+			"right": "walls/inner/right",
+			"bottom": "walls/inner/bottom",
+			"left": "walls/inner/left",
+			"top_right_corner": "walls/inner/top_right_corner",
+			"top_left_corner": "walls/inner/top_left_corner",
+			"bottom_right_corner": "walls/inner/bottom_right_corner",
+			"bottom_left_corner": "walls/inner/bottom_left_corner",
+			"top_left_join": "walls/inner/top_left_join",
+			"top_right_join": "walls/inner/top_right_join",
+			"bottom_left_join": "walls/inner/bottom_left_join",
+			"bottom_right_join": "walls/inner/bottom_right_join"
+		},
+		"outer": {
+			"top": "walls/outer/top",
+			"right": "walls/outer/right",
+			"bottom": "walls/outer/bottom",
+			"left": "walls/outer/left",
+			"top_left_corner": "walls/outer/top_left_corner",
+			"top_right_corner": "walls/outer/top_right_corner",
+			"bottom_left_corner": "walls/outer/bottom_left_corner",
+			"bottom_right_corner": "walls/outer/bottom_right_corner"
+		},
+		"prison": {
+			"top": "walls/prison/top",
+			"right": "walls/prison/right",
+			"bottom": "walls/prison/bottom",
+			"left": "walls/prison/left",
+			"top_left_corner": "walls/prison/top_left_corner",
+			"top_right_corner": "walls/prison/top_right_corner",
+			"bottom_left_corner": "walls/prison/bottom_left_corner",
+			"bottom_right_corner": "walls/prison/bottom_right_corner",
+			"door": "walls/prison/door"
+		}
+	}
+}

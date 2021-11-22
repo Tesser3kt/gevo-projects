@@ -1,0 +1,83 @@
+{
+	"window": {
+		"width": 4800,
+		"height": 3300,
+		"margin": {
+			"top": 120,
+			"right": 120,
+			"bottom": 120,
+			"left": 120
+		}
+	},
+	"supersampling": 4,
+	"grid": {
+		"x": 120,
+		"y": 520,
+		"width": 4560,
+		"height": 2660,
+		"rows": 6,
+		"cols": 13,
+		"line_width": 4
+	},
+	"cell": {
+		"margin": {
+			"top": 40,
+			"right": 40,
+			"bottom": 40,
+			"left": 40
+		}
+	},
+	"epsilon": 0.01,
+	"days": 5,
+	"lessons": 12,
+	"lesson_length": 45,
+	"day_names": [
+		"Po",
+		"Út",
+		"St",
+		"Čt",
+		"Pá"
+	],
+	"lesson_start": [
+		"07:40",
+		"08:30",
+		"09:25",
+		"10:20",
+		"11:20",
+		"12:15",
+		"13:10",
+		"14:00",
+		"14:50",
+		"15:40",
+		"16:30",
+		"17:20"
+	],
+	"fonts": {
+		"title": {
+			"family": "NotoSansDisplay-Bold.ttf",
+			"size": 160
+		},
+		"big": {
+			"family": "NotoSansDisplay-Regular.ttf",
+			"size": 88
+		},
+		"big_bold": {
+			"family": "NotoSansDisplay-Bold.ttf",
+			"size": 88
+		},
+		"normal": {
+			"family": "NotoSansDisplay-Regular.ttf",
+			"size": 72
+		},
+		"small": {
+			"family": "NotoSansDisplay-Regular.ttf",
+			"size": 52
+		}
+	},
+	"color": {
+		"bg": "#fff",
+		"grid": "#000",
+		"text": "#000"
+	},
+	"wakeup_time": "01:00"
+}

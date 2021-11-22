@@ -1,0 +1,140 @@
+﻿{
+    "Poč": [
+        [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+                "groups": [
+                    "4.B IVT2"
+                ],
+                "classes": [
+                    "4.B"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            null,
+            null
+        ],
+        [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        [
+            null,
+            null,
+            null,
+            null,
+            {
+                "groups": [
+                    "4.B IVT1"
+                ],
+                "classes": [
+                    "4.B"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            null,
+            null,
+            null,
+            {
+                "groups": [
+                    "4.A IVT2"
+                ],
+                "classes": [
+                    "4.A"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            {
+                "groups": [
+                    "4.A IVT1"
+                ],
+                "classes": [
+                    "4.A"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            null,
+            null
+        ],
+        [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        [
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+                "groups": [
+                    "5.A IVT2"
+                ],
+                "classes": [
+                    "5.A"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            {
+                "groups": [
+                    "5.A IVT1"
+                ],
+                "classes": [
+                    "5.A"
+                ],
+                "teacher_short": "Kle",
+                "teacher_long": "Bc. Adam Klepáč",
+                "room": "Poč",
+                "subject": "IVT"
+            },
+            null,
+            null,
+            null,
+            null,
+            null
+        ]
+    ]
+}
