@@ -1,7 +1,8 @@
 import turtle as tt
 
-GRID_SIZE = 600
-FIELD_SIZE = GRID_SIZE // 3
+FIELD_COUNT = 30
+GRID_SIZE = 900
+FIELD_SIZE = GRID_SIZE // FIELD_COUNT
 RADIUS = (3 * FIELD_SIZE) // 8
 BOUND = GRID_SIZE // 2
 
@@ -36,24 +37,24 @@ def draw_cross(x, y, radius):
     pen.goto(x + radius, y - radius)
 
 
-def draw_grid(x, y, side_length):
-    third = side_length // 3
+def draw_grid(x, y, side_length, field_count):
+    field_size = side_length // field_count
     pen.pu()
     pen.goto(x, y)
 
-    for i in range(4):
+    for i in range(field_count + 1):
         pen.pd()
-        pen.goto(x + i * third, y + side_length)
+        pen.goto(x + i * field_size, y + side_length)
         pen.pu()
-        pen.goto(x + (i + 1) * third, y)
+        pen.goto(x + (i + 1) * field_size, y)
 
     pen.pu()
     pen.goto(x, y)
-    for i in range(4):
+    for i in range(field_count + 1):
         pen.pd()
-        pen.goto(x + side_length, y + i * third)
+        pen.goto(x + side_length, y + i * field_size)
         pen.pu()
-        pen.goto(x, y + (i + 1) * third)
+        pen.goto(x, y + (i + 1) * field_size)
 
 
 def handle_click(x, y):
@@ -82,9 +83,25 @@ def handle_click(x, y):
                 print('Cross has won.')
             else:
                 print('Circle has won.')
-            tt.bye()
+
+            screen.onclick(None)
+            return
+
+        if tie():
+            print('Tie.')
+            screen.onclick(None)
 
         player = -player
+
+
+def tie():
+    global board
+    for row in board:
+        for field in row:
+            if field == 0:
+                return False
+
+    return True
 
 
 def game_over():
@@ -92,34 +109,48 @@ def game_over():
 
     # check rows
     for row in board:
-        if abs(sum(row)) == 3:
-            return True
+        for i in range(FIELD_COUNT - 4):
+            if abs(sum(row[i + j] for j in range(5))) == 5:
+                return True
 
     # check columns
-    for i in range(3):
-        if abs(board[0][i] + board[1][i] + board[2][i]) == 3:
-            return True
+    for col in range(FIELD_COUNT):
+        for i in range(FIELD_COUNT - 4):
+            if abs(sum(board[i + j][col] for j in range(5))) == 5:
+                return True
 
     # check diags
-    if abs(board[0][0] + board[1][1] + board[2][2]) == 3:
-        return True
+    for row in range(FIELD_COUNT - 4):
+        # left -> right
+        for col in range(FIELD_COUNT - 4):
+            if abs(sum(board[row + i][col + i] for i in range(5))) == 5:
+                return True
 
-    if abs(board[0][2] + board[1][1] + board[2][0]) == 3:
-        return True
+        # right -> left
+        for col in range(4, FIELD_COUNT):
+            if abs(sum(board[row + i][col - i] for i in range(5))) == 5:
+                return True
 
     return False
 
 
-board = [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0]
-]
+def clear_board():
+    global board, player
+    pen.clear()
+    screen.onclick(handle_click)
+    draw_grid(-BOUND, -BOUND, GRID_SIZE, FIELD_COUNT)
+    board = [[0 for _ in range(FIELD_COUNT)] for _ in range(FIELD_COUNT)]
+    player = 1
+
+
+board = [[0 for _ in range(FIELD_COUNT)] for _ in range(FIELD_COUNT)]
 player = 1
 screen.onclick(handle_click)
-pen.speed(10)
+screen.onkey(clear_board, 'space')
+pen.speed(0)
 pen.hideturtle()
+tt.listen()
 
-draw_grid(-BOUND, -BOUND, GRID_SIZE)
+draw_grid(-BOUND, -BOUND, GRID_SIZE, FIELD_COUNT)
 
 tt.mainloop()

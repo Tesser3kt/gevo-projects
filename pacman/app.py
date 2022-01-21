@@ -12,7 +12,10 @@ def main():
     logging.basicConfig(filename='log', filemode='w+',
                         encoding='utf-8', level=logging.DEBUG)
     pacman = Pacman(GameState.INTRO, BASE_DIR)
-    pacman.spawn_objects()
+    pacman.init_gfx()
+    pacman.load_all_textures()
+    pacman.spawn()
+    pacman.draw()
     pacman.run()
 
 

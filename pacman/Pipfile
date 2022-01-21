@@ -7,8 +7,8 @@ name = "pypi"
 pycodestyle = "*"
 pylint = "*"
 autopep8 = "*"
-pygame = "*"
 numpy = "*"
+pygame = "~=2.1.0"
 
 [dev-packages]
 

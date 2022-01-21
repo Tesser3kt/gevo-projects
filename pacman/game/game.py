@@ -16,6 +16,16 @@ class Game(ABC):
         self.defaults: dict = None
 
     @abstractmethod
+    def init_gfx(self) -> None:
+        """ Initializes the game graphics. """
+        ...
+
+    @abstractmethod
     def update(self) -> None:
         """ Updates the game state. """
+        ...
+
+    @abstractmethod
+    def run(self) -> None:
+        """ Runs the game and keeps it running until given exit signal. """
         ...

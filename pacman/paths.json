@@ -1,5 +1,5 @@
 {
-	"coins": {
+	"coin": {
 		"energizer": "coins/energizer",
 		"normal": "coins/normal"
 	},
@@ -12,47 +12,47 @@
 		"pear": "fruit/pear",
 		"strawberry": "fruit/strawberry"
 	},
-	"ghosts": {
+	"ghost": {
 		"black_ghost": {
 			"up": "ghosts/black_ghost/up",
 			"right": "ghosts/black_ghost/right",
-			"bottom": "ghosts/black_ghost/bottom",
+			"down": "ghosts/black_ghost/down",
 			"left": "ghosts/black_ghost/left"
 		},
 		"blue_ghost": {
 			"up": "ghosts/blue_ghost/up",
 			"right": "ghosts/blue_ghost/right",
-			"bottom": "ghosts/blue_ghost/bottom",
+			"down": "ghosts/blue_ghost/down",
 			"left": "ghosts/black_ghost/left"
 		},
 		"pink_ghost": {
 			"up": "ghosts/pink_ghost/up",
 			"right": "ghosts/pink_ghost/right",
-			"bottom": "ghosts/pink_ghost/bottom",
+			"down": "ghosts/pink_ghost/down",
 			"left": "ghosts/pink_ghost/left"
 		},
 		"red_ghost": {
 			"up": "ghosts/red_ghost/up",
 			"right": "ghosts/red_ghost/right",
-			"bottom": "ghosts/red_ghost/bottom",
+			"down": "ghosts/red_ghost/down",
 			"left": "ghosts/red_ghost/left"
 		},
 		"turquoise_ghost": {
 			"up": "ghosts/turquoise_ghost/up",
 			"right": "ghosts/turquoise_ghost/right",
-			"bottom": "ghosts/turquoise_ghost/bottom",
+			"down": "ghosts/turquoise_ghost/down",
 			"left": "ghosts/turquoise_ghost/left"
 		},
 		"white_ghost": {
 			"up": "ghosts/white_ghost/up",
 			"right": "ghosts/white_ghost/right",
-			"bottom": "ghosts/white_ghost/bottom",
+			"down": "ghosts/white_ghost/down",
 			"left": "ghosts/white_ghost/left"
 		},
 		"yellow_ghost": {
 			"up": "ghosts/yellow_ghost/up",
 			"right": "ghosts/yellow_ghost/right",
-			"bottom": "ghosts/yellow_ghost/bottom",
+			"down": "ghosts/yellow_ghost/down",
 			"left": "ghosts/yellow_ghost/left"
 		}
 	},
@@ -60,13 +60,15 @@
 		"key": "other/key"
 	},
 	"pac": {
-		"up": "pac/up",
-		"right": "pac/right",
-		"left": "pac/left",
-		"down": "pac/down",
-		"die": "pac/die"
+		"pac": {
+			"up": "pac/up",
+			"right": "pac/right",
+			"left": "pac/left",
+			"down": "pac/down",
+			"die": "pac/die"
+		}
 	},
-	"walls": {
+	"wall": {
 		"inner": {
 			"top": "walls/inner/top",
 			"right": "walls/inner/right",
@@ -79,7 +81,8 @@
 			"top_left_join": "walls/inner/top_left_join",
 			"top_right_join": "walls/inner/top_right_join",
 			"bottom_left_join": "walls/inner/bottom_left_join",
-			"bottom_right_join": "walls/inner/bottom_right_join"
+			"bottom_right_join": "walls/inner/bottom_right_join",
+			"inside": "walls/inner/inside"
 		},
 		"outer": {
 			"top": "walls/outer/top",

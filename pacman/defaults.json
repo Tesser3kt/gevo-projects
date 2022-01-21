@@ -1,0 +1,51 @@
+{
+	"window": {
+		"width": 672,
+		"height": 744
+	},
+	"game": {
+		"width_units": 28,
+		"height_units": 31,
+		"pixels_per_unit": 24,
+		"bg_color": [
+			0,
+			0,
+			0
+		]
+	},
+	"object": {
+		"coin": [
+			"energizer",
+			"normal"
+		],
+		"fruit": [
+			"apple",
+			"apricot",
+			"cherry",
+			"flame",
+			"melon",
+			"pear",
+			"strawberry"
+		],
+		"ghost": [
+			"black_ghost",
+			"blue_ghost",
+			"pink_ghost",
+			"red_ghost",
+			"turquoise_ghost",
+			"white_ghost",
+			"yellow_ghost"
+		],
+		"other": [
+			"key"
+		],
+		"pac": [
+			"pac"
+		],
+		"wall": [
+			"outer",
+			"inner",
+			"prison"
+		]
+	}
+}

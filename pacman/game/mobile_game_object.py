@@ -1,8 +1,7 @@
 """ Contains the mobile game objects abstract class. """
 
 from typing import Tuple
-from pygame import Rect
-from pygame.image import Surface
+from pygame import Rect, Surface
 from pygame.sprite import RenderUpdates, collide_rect, spritecollideany
 
 
@@ -13,9 +12,9 @@ from game.movement_direction import MovementDirection
 class MobileGameObject(GameObject):
     """ The mobile game object abstract base class. """
 
-    def __init__(self, animation_dict: dict[str, list[Surface]],
-                 rect: Rect, group: RenderUpdates):
-        super().__init__(animation_dict['up'], rect, group)
+    def __init__(self, animation_dict: dict[str, list[Surface]], rect: Rect,
+                 type: str, destructible: bool):
+        super().__init__(animation_dict['up'], rect, type, destructible)
         self.animation_dict = animation_dict
 
     def move(self, vector: Tuple[int, int], direction: MovementDirection):
@@ -25,7 +24,7 @@ class MobileGameObject(GameObject):
         self.animation = self.animation_dict[direction]
         self.rect.move(*vector)
 
-    def collides_with(self, other: 'GameObject') -> bool:
+    def collides_with(self, other: GameObject) -> bool:
         """ Checks if the object is colliding with another object. """
 
         return collide_rect(self, other)
