@@ -11,7 +11,24 @@
 			0,
 			0,
 			0
-		]
+		],
+		"ghost_types": {
+			"ghost_normal_types": [
+				"pink_ghost",
+				"red_ghost",
+				"turquoise_ghost",
+				"yellow_ghost"
+			],
+			"ghost_dangerous_types": [
+				"black_ghost"
+			],
+			"ghost_energized_types": [
+				"blue_ghost"
+			],
+			"ghost_energized_dangerous_types": [
+				"white_ghost"
+			]
+		}
 	},
 	"object": {
 		"coin": [

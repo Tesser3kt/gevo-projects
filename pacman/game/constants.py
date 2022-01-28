@@ -42,14 +42,10 @@ class Constants:
             [1] + [0] * (self.width_units - 2) + [1],
             [1] * self.width_units
         ]
-        self.no_coins =\
-            [(row, col) for row in range(10, 22) for col in range(5)] +\
-            [(row, col) for row in range(10, 22) for col in range(
-                self.width_units - 4, self.width_units)] +\
-            [(row, 9) for row in range(11, 21)] +\
-            [(row, 18) for row in range(11, 21)] +\
-            [(11, col) for col in range(9, 19)] +\
-            [(20, col) for col in range(9, 19)]
+        self.no_coins = [(row, col) for row in range(9, 22) for
+                         col in range(self.width_units)
+                         if col not in [6, self.width_units - 7]] +\
+            [(22, 12), (22, 15)]
         self.inner_wall = [
             [0] * self.width_units,
             [0] * self.width_units,
@@ -174,7 +170,10 @@ class Constants:
         ]
         self.energizers = [
             (1, 1),
-            (self.width_units - 2, 1),
-            (1, self.height_units - 2),
-            (self.width_units - 2, self.height_units - 2)
+            (1, self.width_units - 2),
+            (self.height_units - 2, 1),
+            (self.height_units - 2, self.width_units - 2)
+        ]
+        self.ghost_spawn = [
+            (13, 14), (14, 14), (15, 14), (16, 14)
         ]

@@ -7,10 +7,9 @@ name = "pypi"
 pycodestyle = "*"
 pylint = "*"
 autopep8 = "*"
-numpy = "*"
-pygame = "~=2.1.0"
+pygame = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"

@@ -10,6 +10,7 @@ from pygame.sprite import RenderUpdates
 from aux import loader
 from game.game import Game
 from game.game_object import GameObject
+from game.mobile_game_object import MobileGameObject
 from game.game_state import GameState
 from game.constants import Constants
 
@@ -229,6 +230,7 @@ class Pacman(Game):
 
         logging.debug('Spawning coins of type %s', type)
         coin_objects = RenderUpdates()
+
         # get coin positions based on type
         coin_positions = []
         try:
@@ -252,21 +254,45 @@ class Pacman(Game):
 
         for row, col in coin_positions:
             coin_objects.add(GameObject(
-                self.textures['coin'][type],
-                Rect(col * self.constants.pixels_per_unit,
-                     row * self.constants.pixels_per_unit,
-                     self.constants.pixels_per_unit,
-                     self.constants.pixels_per_unit),
+                animation=self.textures['coin'][type],
+                rect=Rect(col * self.constants.pixels_per_unit,
+                          row * self.constants.pixels_per_unit,
+                          self.constants.pixels_per_unit,
+                          self.constants.pixels_per_unit),
                 type=f'coin_{type}',
                 destructible=True))
 
         logging.debug('Coins of type %s successfully spawned.', type)
         return coin_objects
 
+    def __spawn_prison_door(self) -> RenderUpdates:
+        """ Spawns prison door. """
+
+        logging.debug('Spawning prison door...')
+
+        door_objects = RenderUpdates()
+        try:
+            for col, row in self.constants.prison_door:
+                door_objects.add(GameObject(
+                    animation=self.textures['wall']['prison']['door'],
+                    rect=Rect(col * self.constants.pixels_per_unit,
+                              row * self.constants.pixels_per_unit,
+                              self.constants.pixels_per_unit,
+                              self.constants.pixels_per_unit),
+                    type='prison_door',
+                    destructible=True))
+        except IndexError as error:
+            logging.error('Prison door badly indexed.')
+            raise SystemExit('Prison door badly indexed.') from error
+
+        logging.debug('Prison door successfully spawned.')
+
+        return door_objects
+
     def __spawn_immobile(self) -> None:
         """ Spawns all the static objects in the game. """
 
-        # create groups for walls and coins
+        # create groups for walls, coins and door
         walls = RenderUpdates()
         coins = RenderUpdates()
 
@@ -277,9 +303,38 @@ class Pacman(Game):
         for type in self.defaults['object']['coin']:
             coins.add(self.__spawn_coins(type))
 
-        # add walls and coins to objects
+        prison_door = self.__spawn_prison_door()
+
+        # add walls, coins and prison door to objects
         self.objects.add(walls)
         self.objects.add(coins)
+        self.objects.add(prison_door)
+
+    def __spawn_mobile(self) -> None:
+        """ Spawns dynamic objects in the game - ghosts and pac. """
+
+        # spawn ghosts
+        ghost_objects = RenderUpdates()
+
+        try:
+            for index, type in enumerate(self.defaults['game']['ghost_types']['ghost_normal_types']):
+                col, row = self.constants.ghost_spawn[index]
+                ghost_objects.add(MobileGameObject(
+                    animation_dict=self.textures['ghost'][type],
+                    rect=Rect(col * self.constants.pixels_per_unit,
+                              row * self.constants.pixels_per_unit,
+                              self.constants.pixels_per_unit,
+                              self.constants.pixels_per_unit),
+                    type=type,
+                    destructible=False))
+        except IndexError as error:
+            logging.error('Ghost spawn position badly indexed.')
+            raise SystemExit('Ghost spawn position badly indexed.') from error
+        except KeyError as key_error:
+            logging.error('Ghost textures key error. Error %s', key_error)
+            raise SystemExit('Ghost textures key error.') from key_error
+
+        # TODO
 
     def spawn(self) -> None:
         """ Spawns all the objects in the game. """
@@ -299,7 +354,7 @@ class Pacman(Game):
         """ Draws all the objects in the game. """
 
         # objects cannot be drawn without spawning
-        if not len(self.objects.sprites()):
+        if not self.objects.sprites():
             logging.error('No objects to draw.')
             raise SystemExit('No objects to draw.')
 
