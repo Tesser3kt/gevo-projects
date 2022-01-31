@@ -12,6 +12,7 @@
 			0,
 			0
 		],
+		"max_fps": 5,
 		"ghost_types": {
 			"ghost_normal_types": [
 				"pink_ghost",
@@ -28,6 +29,16 @@
 			"ghost_energized_dangerous_types": [
 				"white_ghost"
 			]
+		},
+		"object_speed": {
+			"pac": 1,
+			"normal_ghost": 0.7,
+			"dangerous_ghost": 1
+		},
+		"object_speed_increase": {
+			"pac": 0.6,
+			"normal_ghost": 0.05,
+			"dangerous_ghost": 0.05
 		}
 	},
 	"object": {

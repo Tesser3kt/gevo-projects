@@ -175,5 +175,6 @@ class Constants:
             (self.height_units - 2, self.width_units - 2)
         ]
         self.ghost_spawn = [
-            (13, 14), (14, 14), (15, 14), (16, 14)
+            (12, 14), (13, 14), (14, 14), (15, 14)
         ]
+        self.pac_spawn = 13, 17
