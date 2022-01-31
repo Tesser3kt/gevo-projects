@@ -43,9 +43,17 @@ def load_textures(assets_dir: str, assets_paths: dict, key: str,
         animation_list = []
         try:
             logging.debug('Scanning folder %s...', folder_path)
-            for file in os.scandir(folder_path):
-                logging.debug('Loading %s as texture...', file.name)
-                surface = image.load(file.path)
+            # get folder files
+            files = os.listdir(folder_path)
+
+            # order them by name
+            files = sorted(files)
+
+            # load images
+            for file in files:
+                file_path = os.path.join(folder_path, file)
+                logging.debug('Loading %s as texture...', file_path)
+                surface = image.load(file_path)
                 surface = transform.scale(surface, image_size)
                 logging.debug('Converting surface...')
                 frame = surface.convert()

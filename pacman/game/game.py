@@ -21,6 +21,11 @@ class Game(ABC):
         ...
 
     @abstractmethod
+    def draw(self) -> None:
+        """ Draw game initial game objects. """
+        ...
+
+    @abstractmethod
     def update(self) -> None:
         """ Updates the game state. """
         ...

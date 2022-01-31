@@ -177,4 +177,4 @@ class Constants:
         self.ghost_spawn = [
             (12, 14), (13, 14), (14, 14), (15, 14)
         ]
-        self.pac_spawn = 13, 17
+        self.pac_spawn = (13, 17)

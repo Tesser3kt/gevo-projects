@@ -2,7 +2,7 @@
 
 import logging
 import os
-from typing import Tuple
+from typing import Sequence, Tuple
 
 import pygame as pg
 from pygame import K_UP, Surface
@@ -40,6 +40,7 @@ class Pacman(Game):
         self.spawner: Spawner = None
         self.clock: Clock = None
         self.level = 0
+        self.changed_rects = []
 
     def init_gfx(self) -> None:
         # init pygame
@@ -59,9 +60,9 @@ class Pacman(Game):
                                          event.key == pg.K_ESCAPE)
 
     def __handle_arrow_key_press(self, keys: dict) -> None:
-        """ Handles key press. """
+        """ Handles arrow key press. """
 
-        logging.debug('Handling key input...')
+        logging.debug('Handling arrow key input...')
         if keys[pg.K_UP]:
             direction = MovementDirection.UP
             vector = (0, -self.defaults['game']['object_speed']['pac'])
@@ -79,14 +80,34 @@ class Pacman(Game):
             vector = (-self.defaults['game']['object_speed']['pac'], 0)
             logging.debug('Key LEFT pressed.')
 
+        self.__move_pac(*vector, direction=direction)
+        logging.debug('Arrow key input handled.')
+
+    def __handle_key_press(self, keys: Sequence[bool]) -> None:
+        """ Handles key-pressed events. """
+
+        logging.debug('Handling key press...')
+        if any((keys[pg.K_UP], keys[pg.K_DOWN], keys[pg.K_RIGHT],
+                keys[pg.K_LEFT])):
+            logging.debug('Arrow key pressed.')
+            self.__handle_arrow_key_press(keys)
+
+        logging.debug('Key press handled.')
+
+    def __move_pac(self, *vector: Tuple[int, int],
+                   direction: MovementDirection):
         logging.debug('Moving pac by %s', vector)
         pac = self.objects['pac'].sprites()[0]
-        pac.move(vector, direction)
+        pac.move(
+            vector[0] * self.defaults['game']['pixels_per_unit'],
+            vector[1] * self.defaults['game']['pixels_per_unit'],
+            direction=direction)
+        self.objects['pac'].clear(self.screen, self.background)
         self.objects['pac'].update()
         changed_rects = self.objects['pac'].draw(self.screen)
-        pg.display.update(changed_rects)
+        self.changed_rects += changed_rects
 
-        logging.debug('Key input handled.')
+        logging.debug('Pac moved by %s', vector)
 
     def load_textures(self) -> None:
         """ Loads game object textures. """
@@ -125,8 +146,6 @@ class Pacman(Game):
         logging.debug('Mobile objects spawned.')
 
     def draw(self) -> None:
-        """ Draws all the objects in the game. """
-
         # objects cannot be drawn without spawning
         if not self.objects:
             logging.error('No objects to draw.')
@@ -137,7 +156,10 @@ class Pacman(Game):
         pg.display.update()
 
     def update(self) -> None:
-        ...
+        pg.display.update(self.changed_rects)
+        self.changed_rects = []
+
+        # TODO check collisions
 
     def run(self) -> None:
         # init game clock (FPS)
@@ -146,14 +168,13 @@ class Pacman(Game):
         running = True
         while running:
             self.clock.tick(self.defaults['game']['max_fps'])
-            # get arrow key events
-            keys = pg.key.get_pressed()
-            if any((keys[pg.K_UP], keys[pg.K_DOWN], keys[pg.K_RIGHT],
-                   keys[pg.K_LEFT])):
-                self.__handle_arrow_key_press(keys)
+            # handle key events
+            self.__handle_key_press(pg.key.get_pressed())
 
             # get other events
             for event in pg.event.get():
                 if self.__user_quit(event):
                     logging.debug('Quit event from user. Exiting...')
                     running = False
+
+            self.update()
