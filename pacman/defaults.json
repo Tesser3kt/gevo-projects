@@ -31,9 +31,9 @@
 			]
 		},
 		"object_speed": {
-			"pac": 0.3,
-			"normal_ghost": 0.2,
-			"dangerous_ghost": 0.3
+			"pac": 0.2,
+			"normal_ghost": 0.15,
+			"dangerous_ghost": 0.2
 		},
 		"object_speed_increase": {
 			"pac": 0.05,

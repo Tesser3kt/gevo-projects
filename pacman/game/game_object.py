@@ -19,6 +19,7 @@ class GameObject(Sprite):
 
     def update(self) -> None:
         """ Updates the game object. """
+
         self.animation_frame = (self.animation_frame +
                                 1) % len(self.animation)
         self.image = self.animation[self.animation_frame]

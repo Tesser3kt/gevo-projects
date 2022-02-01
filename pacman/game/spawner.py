@@ -232,7 +232,7 @@ class Spawner:
                               row * self.constants.pixels_per_unit,
                               self.constants.pixels_per_unit,
                               self.constants.pixels_per_unit),
-                    type=type,
+                    type=f'ghost_{type}',
                     destructible=False))
         except IndexError as error:
             logging.error('Ghost spawn positions badly indexed.')

@@ -2,11 +2,11 @@
 
 import logging
 import os
-from typing import Sequence, Tuple
+from typing import List, Sequence, Tuple
 
 import pygame as pg
-from pygame import K_UP, Surface
-from pygame.sprite import RenderUpdates
+from pygame import Surface, Rect
+from pygame.sprite import RenderUpdates, groupcollide, spritecollideany
 from pygame.event import Event
 from pygame.time import Clock
 
@@ -14,6 +14,7 @@ from aux import loader
 from game.game import Game
 from game.game_state import GameState
 from game.constants import Constants
+from game.mobile_game_object import MobileGameObject
 from game.movement_direction import MovementDirection
 from game.texture_loader import TextureLoader
 from game.spawner import Spawner
@@ -40,7 +41,6 @@ class Pacman(Game):
         self.spawner: Spawner = None
         self.clock: Clock = None
         self.level = 0
-        self.changed_rects = []
 
     def init_gfx(self) -> None:
         # init pygame
@@ -80,7 +80,7 @@ class Pacman(Game):
             vector = (-self.defaults['game']['object_speed']['pac'], 0)
             logging.debug('Key LEFT pressed.')
 
-        self.__move_pac(*vector, direction=direction)
+        self.__move_object('pac', *vector, direction=direction)
         logging.debug('Arrow key input handled.')
 
     def __handle_key_press(self, keys: Sequence[bool]) -> None:
@@ -94,25 +94,62 @@ class Pacman(Game):
 
         logging.debug('Key press handled.')
 
-    def __move_pac(self, *vector: Tuple[int, int],
-                   direction: MovementDirection):
-        logging.debug('Moving pac by %s', vector)
-        pac = self.objects['pac'].sprites()[0]
-        pac.move(
-            vector[0] * self.defaults['game']['pixels_per_unit'],
-            vector[1] * self.defaults['game']['pixels_per_unit'],
-            direction=direction)
-        self.objects['pac'].clear(self.screen, self.background)
-        self.objects['pac'].update()
-        changed_rects = self.objects['pac'].draw(self.screen)
-        self.changed_rects += changed_rects
+    def __object_collides_with_solid(self, object: MobileGameObject) -> bool:
+        """ Simple test if a given object collides with walls or door. """
 
-        logging.debug('Pac moved by %s', vector)
+        return spritecollideany(object, self.objects['walls']) or\
+            spritecollideany(object, self.objects['prison_door'])
+
+    def __move_object(self, object_type: str, *vector: Tuple[int, int],
+                      direction: MovementDirection):
+        logging.debug('Moving object %s by %s...', object_type, vector)
+
+        # get MobileGameObject based on object_type
+        if object_type == 'pac':
+            try:
+                object = self.objects['pac'].sprites()[0]
+            except IndexError:
+                logging.error('Pac not initialized. Cannot move.')
+        else:
+            object = [obj for obj in self.objects['ghosts']
+                      if object_type == obj.type]
+            if len(object) != 1:
+                logging.error(
+                    'Error moving %s. No such object initialized. ',
+                    object_type)
+                return
+            object = object[0]
+
+        # calculated position change
+        vector = (vector[0] * self.defaults['game']['pixels_per_unit'],
+                  vector[1] * self.defaults['game']['pixels_per_unit'])
+
+        # move object by specified vector
+        obj_prev_direction = object.direction
+        object.move(*vector, direction=direction)
+
+        # if object collides with solid, move it back
+        if self.__object_collides_with_solid(object):
+            vector = (-vector[0], -vector[1])
+            object.move(*vector, direction=obj_prev_direction)
+
+        logging.debug('Object %s moved by %s.', object_type, vector)
+
+    def __update_moving_objects(self) -> List[Rect]:
+        """ Updates moving objects after their position has changed."""
+
+        changed_rects = []
+        for moving_object_grp in ['pac', 'ghosts']:
+            self.objects[moving_object_grp].clear(self.screen, self.background)
+            self.objects[moving_object_grp].update()
+            changed_rects += self.objects[moving_object_grp].draw(self.screen)
+
+        return changed_rects
 
     def load_textures(self) -> None:
         """ Loads game object textures. """
 
-        # graphics must be initalized for texture loading to work
+        # graphics must be initialized for texture loading to work
         if not self.screen:
             logging.error(
                 'Cannot load textures without initializing graphics.')
@@ -123,8 +160,8 @@ class Pacman(Game):
         txtr_loader = TextureLoader(self.assets_dir, self.defaults, self.paths)
         self.textures = txtr_loader.load_all_textures()
 
-    def spawn(self) -> None:
-        """ Spawns all the objects in the game. """
+    def spawn_default(self) -> None:
+        """ Spawns all the initial objects in the game. """
 
         # textures must be loaded before spawning objects
         if not self.textures:
@@ -156,10 +193,10 @@ class Pacman(Game):
         pg.display.update()
 
     def update(self) -> None:
-        pg.display.update(self.changed_rects)
-        self.changed_rects = []
+        changed_rects = self.__update_moving_objects()
+        pg.display.update(changed_rects)
 
-        # TODO check collisions
+        # TODO allow movement only on whole units
 
     def run(self) -> None:
         # init game clock (FPS)

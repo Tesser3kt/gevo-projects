@@ -22,7 +22,7 @@ def main():
     pacman = Pacman(GameState.INTRO, BASE_DIR)
     pacman.init_gfx()
     pacman.load_textures()
-    pacman.spawn()
+    pacman.spawn_default()
     pacman.draw()
 
     # run game
