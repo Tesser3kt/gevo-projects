@@ -80,7 +80,7 @@ class Pacman(Game):
             vector = (-self.defaults['game']['object_speed']['pac'], 0)
             logging.debug('Key LEFT pressed.')
 
-        self.__move_object('pac', *vector, direction=direction)
+        self.__move_object('pac', vector, direction=direction)
         logging.debug('Arrow key input handled.')
 
     def __handle_key_press(self, keys: Sequence[bool]) -> None:
@@ -100,8 +100,8 @@ class Pacman(Game):
         return spritecollideany(object, self.objects['walls']) or\
             spritecollideany(object, self.objects['prison_door'])
 
-    def __move_object(self, object_type: str, *vector: Tuple[int, int],
-                      direction: MovementDirection):
+    def __move_object(self, object_type: str, vector: Tuple[int, int],
+                      direction: MovementDirection) -> None:
         logging.debug('Moving object %s by %s...', object_type, vector)
 
         # get MobileGameObject based on object_type
@@ -120,30 +120,48 @@ class Pacman(Game):
                 return
             object = object[0]
 
-        # calculated position change
+        if object.moving:
+            return
+
+            # calculated position change
         vector = (vector[0] * self.defaults['game']['pixels_per_unit'],
                   vector[1] * self.defaults['game']['pixels_per_unit'])
 
         # move object by specified vector
         obj_prev_direction = object.direction
-        object.move(*vector, direction=direction)
+        object.move(vector, direction=direction)
 
         # if object collides with solid, move it back
         if self.__object_collides_with_solid(object):
             vector = (-vector[0], -vector[1])
-            object.move(*vector, direction=obj_prev_direction)
+            object.move(vector, direction=obj_prev_direction)
 
         logging.debug('Object %s moved by %s.', object_type, vector)
 
     def __update_moving_objects(self) -> List[Rect]:
         """ Updates moving objects after their position has changed."""
 
+        logging.debug(
+            'Updating moving objects position and drawing changes...')
+
         changed_rects = []
+        game_unit_size = self.defaults['game']['pixels_per_unit']
         for moving_object_grp in ['pac', 'ghosts']:
+            # keep moving until whole game units are reached
+            for object in self.objects[moving_object_grp].sprites():
+                if object.moving:
+                    if object.rect.x % game_unit_size or\
+                            object.rect.y % game_unit_size:
+                        object.move()
+                    else:
+                        object.moving = False
+
+                        # draw changes
             self.objects[moving_object_grp].clear(self.screen, self.background)
             self.objects[moving_object_grp].update()
             changed_rects += self.objects[moving_object_grp].draw(self.screen)
 
+        logging.debug('Finished updating moving objects.')
         return changed_rects
 
     def load_textures(self) -> None:
@@ -204,7 +222,9 @@ class Pacman(Game):
 
         running = True
         while running:
+            # start game clock
             self.clock.tick(self.defaults['game']['max_fps'])
+
             # handle key events
             self.__handle_key_press(pg.key.get_pressed())
 

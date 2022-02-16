@@ -17,12 +17,16 @@ class MobileGameObject(GameObject):
         super().__init__(animation_dict['up'], rect, type, destructible)
         self.animation_dict = animation_dict
         self.direction = MovementDirection.UP
+        self.vector = (0, 0)
         self.moving = False
 
-    def move(self, *vector: Tuple[int, int], direction: MovementDirection):
+    def move(self, vector: Tuple[int, int] = None,
+             direction: MovementDirection = None):
         """ Moves the mobile game object by 'vector' in direction
         'direction'. """
 
-        self.direction = direction
+        if vector and direction:
+            self.direction = direction
+            self.vector = vector
         self.animation = self.animation_dict[self.direction]
-        self.rect = self.rect.move(*vector)
+        self.rect = self.rect.move(*self.vector)
