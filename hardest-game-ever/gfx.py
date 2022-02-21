@@ -1,35 +1,55 @@
+""" Contains the Graphics class. """
+
 import pygame as pg
 
-""" Graphics module. """
+import constants as ct
 
 
 class Graphics:
-    """ Graphics class. """
+    """ Game graphics class. Takes care of initializing pygame graphics,
+    loading object texture and drawing objects on screen. """
 
     def __init__(self):
-        self.window_size = 640
-        self.unit_size = 16
-        self.bg_color = 255, 255, 255
-        self.window_title = 'PacWoman'
         self.canvas: pg.Surface = None
         self.background: pg.Surface = None
+        self.textures: dict[str, pg.Surface] = {}
 
     def init_gfx(self) -> None:
-        """ Initialize the graphics. """
+        """ Initializes game graphics, creates the canvas and background
+        surface. """
 
+        # init pygame
         pg.init()
-        pg.display.set_caption(self.window_title)
-        self.canvas = pg.display.set_mode((self.window_size,
-                                           self.window_size), pg.SCALED)
+
+        # create game window and canvas
+        self.canvas = pg.display.set_mode(ct.WINDOW_SIZE, pg.SCALED)
+
+        # set window title
+        pg.display.set_title(ct.WINDOW_TITLE)
+
+        # create bg surface
         self.background = pg.Surface(self.canvas.get_size())
-        self.background.fill(self.bg_color)
+        self.background.fill(ct.BG_COLOR)
         self.background = self.background.convert()
-        self.canvas.blit(self.background, (100, 100))
-        pg.display.update()
 
+        # blit bg to canvas
+        self.canvas.blit(self.background, (0, 0))
 
-gfx = Graphics()
-gfx.init_gfx()
+    def load_textures(self) -> None:
+        """ Loads textures of all game object types - player, wall and
+        enemy. """
 
-while True:
-    ...
+        # load texture for each object name
+        for obj in 'player', 'enemy', 'wall':
+
+            # load the object image
+            image = pg.image.load(f'{obj}.png')
+
+            # scale it to unit size
+            image = pg.transform.image(image, ct.UNIT_SIZE)
+
+            # convert it for faster blitting
+            image = image.convert()
+
+            # save to textures
+            self.textures[obj] = image
