@@ -4,7 +4,7 @@ from datetime import datetime as dt
 from unidecode import unidecode as ud
 
 from drawer.drawer import Drawer
-from aux.loader import load_json_file
+from auxil.loader import load_json_file
 
 
 def main():
@@ -20,6 +20,9 @@ def main():
     logging.info(text)
     logging.info(len(text) * '-')
 
+    # get base dir
+    base_dir = os.path.dirname(__file__)
+
     # load default config
     config = load_json_file('config.json')
 
@@ -27,10 +30,10 @@ def main():
     timetable = load_json_file('timetable.json')
 
     # initialize gfx and load fonts
-    drawer = Drawer('1', config['color']['bg'], config)
+    drawer = Drawer('1', config['color']['bg'], config, base_dir)
     drawer.init_canvas()
     for name, font in config['fonts'].items():
-        drawer.load_font(name, f'fonts/{font["family"]}', font['size'])
+        drawer.load_font(name, font["family"], font['size'])
 
     # draw timetable for every classroom
     for room_name, room_timetable in timetable.items():

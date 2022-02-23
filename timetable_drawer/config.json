@@ -1,30 +1,30 @@
 {
 	"window": {
-		"width": 4800,
-		"height": 3300,
+		"width": 1200,
+		"height": 825,
 		"margin": {
-			"top": 120,
-			"right": 120,
-			"bottom": 120,
-			"left": 120
+			"top": 30,
+			"right": 30,
+			"bottom": 30,
+			"left": 30
 		}
 	},
-	"supersampling": 4,
+	"supersampling": 1,
 	"grid": {
-		"x": 120,
-		"y": 520,
-		"width": 4560,
-		"height": 2660,
+		"x": 30,
+		"y": 130,
+		"width": 1140,
+		"height": 665,
 		"rows": 6,
 		"cols": 13,
-		"line_width": 4
+		"line_width": 1
 	},
 	"cell": {
 		"margin": {
-			"top": 40,
-			"right": 40,
-			"bottom": 40,
-			"left": 40
+			"top": 10,
+			"right": 10,
+			"bottom": 10,
+			"left": 10
 		}
 	},
 	"epsilon": 0.01,
@@ -55,29 +55,28 @@
 	"fonts": {
 		"title": {
 			"family": "NotoSansDisplay-Bold.ttf",
-			"size": 160
+			"size": 40
 		},
 		"big": {
 			"family": "NotoSansDisplay-Regular.ttf",
-			"size": 88
+			"size": 22
 		},
 		"big_bold": {
 			"family": "NotoSansDisplay-Bold.ttf",
-			"size": 88
+			"size": 22
 		},
 		"normal": {
 			"family": "NotoSansDisplay-Regular.ttf",
-			"size": 72
+			"size": 18
 		},
 		"small": {
 			"family": "NotoSansDisplay-Regular.ttf",
-			"size": 52
+			"size": 13
 		}
 	},
 	"color": {
 		"bg": "#fff",
 		"grid": "#000",
 		"text": "#000"
-	},
-	"wakeup_time": "01:00"
+	}
 }
