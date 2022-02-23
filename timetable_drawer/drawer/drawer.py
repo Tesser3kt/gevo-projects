@@ -2,22 +2,23 @@
 
 import logging
 import os
-import json
 from datetime import datetime, timedelta
 from PIL import Image, ImageDraw, ImageFont
 
-from aux.converter import convert_dt_to_hm
+from auxil.converter import convert_dt_to_hm
 
 
 class Drawer:
     """ The drawer responsible for drawing grayscale bitmaps. """
 
-    def __init__(self, mode: str, bg_color: str, config: dict):
+    def __init__(self, mode: str, bg_color: str, config: dict, base_dir: str):
+        self.base_dir = base_dir
         self.mode = mode
         self.window = config['window']
+        self.bg_color = bg_color
         self.img = Image.new(mode=self.mode, size=(
             self.window['width'], self.window['height']),
-            color=bg_color)
+            color=self.bg_color)
         self.supersampling = config['supersampling']
         self.draw: ImageDraw.ImageDraw = None
         self.fonts: dict[str, ImageFont.ImageFont] = {}
@@ -46,6 +47,10 @@ class Drawer:
         """ Clears the canvas by drawing white rectangle over it. """
 
         logging.debug('Clearing canvas...')
+        self.img = Image.new(mode=self.mode, size=(
+            self.window['width'], self.window['height']),
+            color=self.bg_color)
+        self.draw = ImageDraw.Draw(self.img)
         self.draw.rectangle(
             [0, 0, self.window['width'], self.window['height']],
             outline=None, fill='#FFF', width=0)
@@ -87,7 +92,7 @@ class Drawer:
 
         logging.info('Loading font %s from %s', font_name, font_path)
         try:
-            path = os.path.join('Fonts', font_path)
+            path = os.path.join(self.base_dir, 'fonts', font_path)
             self.fonts[font_name] = ImageFont.truetype(path, font_size)
         except Exception as error:
             logging.error('Error loading font %s from %s. Error: %s',
@@ -257,6 +262,9 @@ class Drawer:
                 # draw white on black rectangle if the (day, hour) should be
                 # highlighted
                 if day_index == cur_day and hour_index == cur_hour:
+                    logging.debug(
+                        'Drawing black rect on day %s and hour %s', cur_day,
+                        cur_hour)
                     color = '#FFF'
                     self.draw.rectangle([
                         self.grid_data['x'] + cell_width * (hour_index + 1),

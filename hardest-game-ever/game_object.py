@@ -7,7 +7,7 @@ import constants as ct
 
 
 class GameObject(ABC, pg.sprite.Sprite):
-    """ Abstract game object class. Inherits from PyGame Sprite - basis class
+    """ Abstract game object class. Inherits from PyGame Sprite - base class
     for all drawable game objects. """
 
     def __init__(self, texture: pg.Surface, x: int = 0, y: int = 0,
